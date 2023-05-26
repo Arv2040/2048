@@ -1,0 +1,102 @@
+body{
+    background-color: black;
+    color: rgb(77, 206, 206);
+    font-family:monospace;
+    font-size:100%          
+    
+}
+.heading{
+    width: fit-content;
+    margin:auto;
+    
+    
+}
+.scorecontainer{
+    width:fit-content;
+    margin:auto;
+
+}
+.board{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    width:400px;
+    height:400px;
+    border:6px solid blueviolet;
+    margin:auto;
+    margin-top:2em;
+    flex-wrap:wrap
+}
+.tile{
+    display:flex;
+
+    width:90px;
+    height:90px;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid blue;
+}
+
+.x2{
+    background-color: green;
+    color: black;
+    font-weight:bold;
+}
+.x4{
+    background-color:red;
+    color: black;
+    font-weight:bold;
+}
+.x8{
+    background-color: white;
+    color: black;
+    font-weight:bold;
+}
+.x16{
+    background-color: yellow;
+    color: black;
+    font-weight:bold;
+}
+.x32{
+    background-color: orange;
+    color: black;
+    font-weight:bold;
+}
+.x64{
+    background-color: blueviolet;
+    color: black;
+    font-weight:bold;
+}
+.x128{
+    background-color: burlywood;
+    color: black;
+    font-weight:bold;
+}
+.x256{
+    background-color: palevioletred;
+    color: black;
+    font-weight:bold;
+}
+.x512{
+    background-color: palegoldenrod;
+    color: black;
+    font-weight:bold;
+}
+.x1024{
+    background-color: blue;
+    color: black;
+    font-weight:bold;
+}
+.x2048{
+    background-color: rosybrown;
+    color: black;
+    font-weight:bold;
+}
+.x4096{
+    background-color: blue;
+    color:darkblue;
+}
+.x8192{
+    background-color: blue;
+    color:darkblue;
+}
