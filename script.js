@@ -5,6 +5,8 @@ var columns = 4;
 window.onload = ()=>{
     Set();
 }
+const boardElement = document.getElementsByClassName("board")[0];
+const overlayDiv = document.getElementsByClassName("overlay")[0];
 function Set(){
     board =[
         [0,0,0,0],
@@ -20,14 +22,14 @@ function Set(){
             tile.id = r.toString() + "-" + c.toString();
             let num = board[r][c];
             update(tile,num);
-            document.getElementsByClassName("board")[0].append(tile);
+            boardElement.append(tile);
 
 
         }
-
     }
     setTwo();
     setTwo();
+    score = 0;
 }
 function hasEmptyTile(){
     for(let r = 0; r<rows;r++){
@@ -62,24 +64,66 @@ function setTwo(){
     }
 
 }
+
+function resetGame(){
+    overlayDiv.style.display = 'none';
+    if(isGameOver()){
+
+        // Send scores to back end
+
+        // fetch("url", {
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //         gameScore: score,
+        //     }),
+        //     headers: {
+        //         "Content-type": "application/json; charset=UTF-8"
+        //     }
+        // });
+        overlayDiv.style.display = "none";
+        Set();
+    }
+}
+
+function isGameOver() {
+    if(hasEmptyTile()) return false;
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 4 - 1; j++) {
+        if (board[i][j] === board[i][j + 1]) return false
+      }
+    }
+
+    for (let i = 0; i < 4 - 1; i++) {
+      for (let j = 0; j < 4; j++) {
+        if (board[i][j] === board[i + 1][j]) return false
+      }
+    }
+    return true
+}
+
 function update(tile,num){
     tile.innerText = "";
     tile.classList.value = "";
     tile.classList.add("tile");
     if(num>0){
         tile.innerText = num;
-        if(num<=4096){
+        if(num!=2048){
             tile.classList.add("x"+num.toString());
         }
         else{
-            tile.classList.add("x8192");
+            tile.classList.add("x2048");
+            overlayDiv.style.display = "flex";
+            overlayDiv.innerText = "Congratulations, You Won";
         }
     }
-
-
-    
 }
+
 document.addEventListener("keyup",(e)=>{
+    if(isGameOver()){
+        overlayDiv.style.display = "flex";
+        overlayDiv.innerText = "Game Over";
+        return;
+    }
     if(e.code =="ArrowLeft"){
         slideLeft();
         setTwo();
@@ -100,8 +144,9 @@ document.addEventListener("keyup",(e)=>{
 })
 function filterzero(row){
     return (row.filter(num=>num!=0));
-
 }
+
+
 function slide(row){
     row = filterzero(row);
     for(let i = 0;i<row.length-1;i++){
@@ -110,8 +155,6 @@ function slide(row){
             row[i+1] = 0;
             score+=row[i];
         }
-
-
     }
     row = filterzero(row);
     while(row.length<columns){
