@@ -1,10 +1,27 @@
 var board;
 var score = 0;
+var highscore = 0;
 var rows = 4;
 var columns = 4;
-window.onload = ()=>{
+window.onload = async ()=>{
+    // highscore = await fetch("api-link");
     Set();
+    
 }
+
+window.onbeforeunload = async () => {
+    // await fetch("api-link", {
+    //         method: "POST",
+    //         body: JSON.stringify({
+    //             gameScore: score,
+    //         }),
+    //         headers: {
+    //             "Content-type": "application/json; charset=UTF-8"
+    //         }
+    //     }
+    // );
+}
+
 const boardElement = document.getElementsByClassName("board")[0];
 const overlayDiv = document.getElementsByClassName("overlay")[0];
 function Set(){
@@ -18,13 +35,10 @@ function Set(){
     for(let r = 0;r<rows;r++){
         for(let c = 0;c<columns;c++){
             let tile = document.createElement("div");
-           
             tile.id = r.toString() + "-" + c.toString();
             let num = board[r][c];
             update(tile,num);
             boardElement.append(tile);
-
-
         }
     }
     setTwo();
@@ -67,22 +81,22 @@ function setTwo(){
 
 function resetGame(){
     overlayDiv.style.display = 'none';
-    if(isGameOver()){
 
-        // Send scores to back end
 
-        // fetch("url", {
-        //     method: "POST",
-        //     body: JSON.stringify({
-        //         gameScore: score,
-        //     }),
-        //     headers: {
-        //         "Content-type": "application/json; charset=UTF-8"
-        //     }
-        // });
-        overlayDiv.style.display = "none";
-        Set();
-    }
+    // Send scores to back end
+
+    // await fetch("url", {
+    //     method: "POST",
+    //     body: JSON.stringify({
+    //         gameScore: score,
+    //     }),
+    //     headers: {
+    //         "Content-type": "application/json; charset=UTF-8"
+    //     }
+    // });
+    const tiles = document.querySelectorAll('.tile');
+    tiles.forEach(tile => tile.remove());
+    Set();
 }
 
 function isGameOver() {
@@ -119,11 +133,7 @@ function update(tile,num){
 }
 
 document.addEventListener("keyup",(e)=>{
-    if(isGameOver()){
-        overlayDiv.style.display = "flex";
-        overlayDiv.innerText = "Game Over";
-        return;
-    }
+    
     if(e.code =="ArrowLeft"){
         slideLeft();
         setTwo();
@@ -140,8 +150,14 @@ document.addEventListener("keyup",(e)=>{
         slideDown();  
         setTwo();  
     }
+
+    if(isGameOver()){
+        overlayDiv.style.display = "flex";
+        overlayDiv.innerHTML = "Game Over";
+    }
     document.getElementById("score").innerText = score;
-})
+});
+
 function filterzero(row){
     return (row.filter(num=>num!=0));
 }
